@@ -5,10 +5,14 @@ const router = express.Router();
 
 router.route("/:fileName").get(async (req, res) => {
   try {
-    const fileData = fs.readFile(`./files/${req.params.fileName}`);
-    console.log(fileData);
+    const fileData = await fs.readFile(
+      `./src/files/${req.params.fileName}.csv`,
+      "utf-8"
+    );
+    res.send(fileData).status(200);
   } catch (err) {
-    console.error(err.mesage);
+    console.error(err);
+    res.send(err).status(500);
   }
 });
 
